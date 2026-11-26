@@ -1,0 +1,107 @@
+@tailwind base;
+@tailwind components;
+@tailwind utilities;
+
+:root {
+  color-scheme: dark;
+}
+
+@layer base {
+  html,
+  body {
+    background-color: #070b12;
+    color: #e2e8f0;
+    font-feature-settings: "cv02", "cv03", "cv04", "cv11";
+    -webkit-font-smoothing: antialiased;
+  }
+
+  * {
+    border-color: #1f2a3d;
+  }
+}
+
+/* Terminal subtle grid background */
+.bg-terminal-grid {
+  background-image:
+    linear-gradient(to right, rgba(31, 42, 61, 0.22) 1px, transparent 1px),
+    linear-gradient(to bottom, rgba(31, 42, 61, 0.22) 1px, transparent 1px);
+  background-size: 32px 32px;
+}
+
+/* Monospace financial tabular numbers */
+.tabular-nums {
+  font-variant-numeric: tabular-nums;
+}
+
+/* Custom sleek dark scrollbars */
+* {
+  scrollbar-width: thin;
+  scrollbar-color: #243247 #0a101a;
+}
+
+::-webkit-scrollbar {
+  width: 7px;
+  height: 7px;
+}
+
+::-webkit-scrollbar-track {
+  background: #0a101a;
+}
+
+::-webkit-scrollbar-thumb {
+  background: #243247;
+  border-radius: 9999px;
+}
+
+::-webkit-scrollbar-thumb:hover {
+  background: #334866;
+}
+
+/* Custom range slider styling */
+input[type="range"].terminal-slider {
+  -webkit-appearance: none;
+  appearance: none;
+  background: transparent;
+  cursor: pointer;
+}
+
+input[type="range"].terminal-slider::-webkit-slider-runnable-track {
+  height: 6px;
+  border-radius: 9999px;
+  background: #1c2738;
+  border: 1px solid #28364d;
+}
+
+input[type="range"].terminal-slider::-webkit-slider-thumb {
+  -webkit-appearance: none;
+  appearance: none;
+  margin-top: -5px;
+  height: 15px;
+  width: 15px;
+  border-radius: 9999px;
+  background: #38bdf8;
+  border: 2px solid #070b12;
+  box-shadow: 0 0 10px rgba(56, 189, 248, 0.45);
+  transition: transform 0.15s ease, background-color 0.15s ease;
+}
+
+input[type="range"].terminal-slider::-webkit-slider-thumb:hover {
+  transform: scale(1.15);
+  background: #7dd3fc;
+}
+
+input[type="range"].terminal-slider::-moz-range-track {
+  height: 6px;
+  border-radius: 9999px;
+  background: #1c2738;
+  border: 1px solid #28364d;
+}
+
+input[type="range"].terminal-slider::-moz-range-thumb {
+  height: 15px;
+  width: 15px;
+  border-radius: 9999px;
+  background: #38bdf8;
+  border: 2px solid #070b12;
+  box-shadow: 0 0 10px rgba(56, 189, 248, 0.45);
+}

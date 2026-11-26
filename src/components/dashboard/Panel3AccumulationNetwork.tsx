@@ -5,10 +5,10 @@ import {
   AreaChart,
   Bar,
   CartesianGrid,
-  Cell,
   ComposedChart,
   Legend,
   Line,
+  Rectangle,
   ReferenceLine,
   ResponsiveContainer,
   Tooltip,
@@ -111,21 +111,33 @@ export function Panel3AccumulationNetwork({
                   />
                   <ReferenceLine y={0.75} stroke="#10b981" strokeDasharray="3 3" />
                   <ReferenceLine y={0.35} stroke="#f43f5e" strokeDasharray="3 3" />
-                  <Bar dataKey="whaleScore" name="Whale Trend Score" radius={[3, 3, 0, 0]}>
-                    {data.map((pt) => (
-                      <Cell
-                        key={`wh-${pt.timestamp}`}
-                        fill={
-                          pt.whaleScore >= 0.72
-                            ? "#10b981"
-                            : pt.whaleScore >= 0.45
-                            ? "#38bdf8"
-                            : "#f43f5e"
-                        }
-                        fillOpacity={0.78}
-                      />
-                    ))}
-                  </Bar>
+                  <Bar
+                    dataKey="whaleScore"
+                    name="Whale Trend Score"
+                    radius={[3, 3, 0, 0]}
+                    shape={(props) => {
+                      const pt = (props as { payload?: AccumulationNetworkPoint })
+                        .payload;
+                      const score = pt?.whaleScore ?? 0;
+                      const fill =
+                        score >= 0.72
+                          ? "#10b981"
+                          : score >= 0.45
+                          ? "#38bdf8"
+                          : "#f43f5e";
+                      return (
+                        <Rectangle
+                          x={props.x}
+                          y={props.y}
+                          width={props.width}
+                          height={props.height}
+                          radius={[3, 3, 0, 0]}
+                          fill={fill}
+                          fillOpacity={0.78}
+                        />
+                      );
+                    }}
+                  />
                 </ComposedChart>
               </ResponsiveContainer>
             </div>

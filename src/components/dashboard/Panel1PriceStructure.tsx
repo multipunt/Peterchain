@@ -4,10 +4,10 @@ import {
   Bar,
   BarChart,
   CartesianGrid,
-  Cell,
   ComposedChart,
   Legend,
   Line,
+  Rectangle,
   ReferenceArea,
   ReferenceLine,
   ResponsiveContainer,
@@ -239,25 +239,33 @@ export function Panel1PriceStructure({
                       ];
                     }}
                   />
-                  <Bar dataKey="sharePct" radius={[0, 4, 4, 0]}>
-                    {urpd.map((entry) => (
-                      <Cell
-                        key={`urpd-${entry.priceBucket}`}
-                        fill={
-                          entry.isCurrentPrice
-                            ? "#38bdf8"
-                            : entry.zone === "support"
-                            ? entry.sharePct > 8
-                              ? "#10b981"
-                              : "#0d9488"
-                            : entry.sharePct > 7
-                            ? "#f43f5e"
-                            : "#f59e0b"
-                        }
-                        fillOpacity={entry.isCurrentPrice ? 1 : 0.82}
-                      />
-                    ))}
-                  </Bar>
+                  <Bar
+                    dataKey="sharePct"
+                    radius={[0, 4, 4, 0]}
+                    shape={(props) => {
+                      const entry = (props as { payload?: UrpdBucket }).payload;
+                      const fill = entry?.isCurrentPrice
+                        ? "#38bdf8"
+                        : entry?.zone === "support"
+                        ? (entry.sharePct ?? 0) > 8
+                          ? "#10b981"
+                          : "#0d9488"
+                        : (entry?.sharePct ?? 0) > 7
+                        ? "#f43f5e"
+                        : "#f59e0b";
+                      return (
+                        <Rectangle
+                          x={props.x}
+                          y={props.y}
+                          width={props.width}
+                          height={props.height}
+                          radius={[0, 4, 4, 0]}
+                          fill={fill}
+                          fillOpacity={entry?.isCurrentPrice ? 1 : 0.82}
+                        />
+                      );
+                    }}
+                  />
                 </BarChart>
               </ResponsiveContainer>
             </div>

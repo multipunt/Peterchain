@@ -4,10 +4,10 @@ import {
   Area,
   Bar,
   CartesianGrid,
-  Cell,
   ComposedChart,
   Legend,
   Line,
+  Rectangle,
   ReferenceLine,
   ResponsiveContainer,
   Tooltip,
@@ -273,15 +273,22 @@ export function Panel2SentimentFlows({
                     name="CPI (%)"
                     barSize={10}
                     radius={[2, 2, 0, 0]}
-                  >
-                    {sentimentFlows.map((pt) => (
-                      <Cell
-                        key={`cpi-${pt.timestamp}`}
-                        fill={pt.cpi >= 0 ? "#10b981" : "#f43f5e"}
-                        fillOpacity={0.65}
-                      />
-                    ))}
-                  </Bar>
+                    shape={(props) => {
+                      const pt = (props as { payload?: SentimentFlowPoint }).payload;
+                      const fill = (pt?.cpi ?? 0) >= 0 ? "#10b981" : "#f43f5e";
+                      return (
+                        <Rectangle
+                          x={props.x}
+                          y={props.y}
+                          width={props.width}
+                          height={props.height}
+                          radius={[2, 2, 0, 0]}
+                          fill={fill}
+                          fillOpacity={0.65}
+                        />
+                      );
+                    }}
+                  />
                   <Line
                     yAxisId="sopr"
                     type="monotone"
